@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Clash | Fighting Arcade</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="game-container">
+        <header class="game-header">
+            <div class="brand">
+                <span class="brand-icon">✦</span>
+                <div>
+                    <h1>NEON <span>CLASH</span></h1>
+                    <p>ARCADE FIGHTING CHAMPIONSHIP</p>
+                </div>
+            </div>
+            <div class="status">● LOCAL MULTIPLAYER</div>
+        </header>
+
+        <section class="arena">
+            <canvas id="gameCanvas" width="960" height="540">
+                Your browser does not support HTML Canvas.
+            </canvas>
+        </section>
+
+        <section class="controls">
+            <div class="player-controls blue">
+                <h2>PLAYER 1 <span>CYBER</span></h2>
+                <p><kbd>A</kbd> <kbd>D</kbd> Move</p>
+                <p><kbd>W</kbd> Jump · <kbd>F</kbd> Punch · <kbd>G</kbd> Kick</p>
+            </div>
+
+            <div class="player-controls pink">
+                <h2>PLAYER 2 <span>PHANTOM</span></h2>
+                <p><kbd>←</kbd> <kbd>→</kbd> Move</p>
+                <p><kbd>↑</kbd> Jump · <kbd>K</kbd> Punch · <kbd>L</kbd> Kick</p>
+            </div>
+        </section>
+
+        <div class="game-actions">
+            <button id="startButton">START FIGHT</button>
+            <p>Press ENTER to start or restart the match.</p>
+        </div>
+
+        <footer>NEON CLASH © 2026 · FIGHT WITH HONOR</footer>
+    </main>
+
+    <script src="game.js"></script>
+</body>
+</html>
