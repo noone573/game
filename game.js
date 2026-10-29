@@ -364,7 +364,7 @@ function handleAction(fighter, key) {
     if (key === fighter.controls.kick) {
         fighter.attack("kick");
     }
-});
+};
 
 startButton.addEventListener("click", startGame);
 
