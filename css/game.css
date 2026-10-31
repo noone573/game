@@ -1,0 +1,275 @@
+/* ── Game / battle screen ── */
+
+/* ── arena wrap: constrains width, sits below the topbar ── */
+.arena-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 0;
+  gap: 0;
+  min-width: 0; /* prevent flex child from overflowing */
+}
+
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+/* ── arena box: letterbox the canvas so it always fits ── */
+.arena {
+  position: relative;
+  background: #000;          /* black bars top and bottom */
+  border: 3px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px #f0b83c18 inset,
+    0 24px 80px #00000060;
+}
+
+/* ── select overlay — on top of the canvas ── */
+.select-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a0e06ee;
+  backdrop-filter: blur(2px);
+}
+
+.select-overlay.hidden {
+  display: none !important;
+}
+
+.select-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  padding: 32px 24px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.select-inner h1 {
+  font-size: clamp(36px, 7vw, 78px);
+  text-shadow: 3px 4px 0 var(--shadow);
+}
+
+.select-inner .muted {
+  margin-top: 0;
+  font-size: clamp(11px, 1.5vw, 14px);
+}
+
+/* ── fullscreen button inside the arena ── */
+.arena-fullscreen {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  background: #1a0e0699;
+  border: 1px solid #f0b83c55;
+  border-radius: 8px;
+  color: var(--hay);
+  font-size: 17px;
+  opacity: 0.6;
+  transition: opacity .15s, background .15s, border-color .15s;
+  backdrop-filter: blur(4px);
+}
+.arena-fullscreen:hover {
+  opacity: 1;
+  background: #1a0e06cc;
+  border-color: var(--hay);
+}
+
+/* ── match-end overlay ── */
+.match-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #1a0e06e0;
+  backdrop-filter: blur(6px);
+}
+.overlay-kicker {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: var(--hay);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.match-overlay h2 {
+  font-family: 'Lilita One', Impact, sans-serif;
+  font-size: clamp(28px, 5.5vw, 60px);
+  color: var(--sun);
+  letter-spacing: 3px;
+  text-shadow: 3px 4px 0 var(--shadow);
+  margin: 4px 0 6px;
+}
+.match-overlay p {
+  color: var(--muted);
+  font-size: clamp(10px, 1.5vw, 13px);
+  margin-bottom: 4px;
+}
+.overlay-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ── when the arena box is fullscreened ── */
+.arena:fullscreen,
+.arena:-webkit-full-screen {
+  border-radius: 0;
+  border: none;
+  width: 100vw;
+  height: 100vh;
+  aspect-ratio: unset;
+}
+.arena:fullscreen #gameCanvas,
+.arena:-webkit-full-screen #gameCanvas {
+  object-fit: contain;
+  background: #000;
+}
+
+/* ── controls strip ── */
+.controls-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 4px 0;
+  flex-wrap: wrap;
+}
+.controls-strip > div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.controls-strip small {
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .8px;
+  margin-left: 7px;
+  text-transform: uppercase;
+}
+.controls-strip .cpu-controlled { opacity: .35; }
+
+/* ── move list section ── */
+.move-list-section {
+  margin-top: 28px;
+  margin-bottom: 8px;
+}
+.move-list-heading { margin-bottom: 12px; }
+.move-list-heading .hint { margin-top: 5px; }
+
+.move-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.move-column {
+  padding: 16px 18px;
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-top: 3px solid var(--fighter-color, var(--hay));
+  border-radius: 12px;
+}
+.move-column h3 {
+  margin: 0 0 10px;
+  font-family: 'Lilita One', Impact, sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--fighter-color, var(--hay));
+  letter-spacing: 1px;
+}
+.move-column h3 small {
+  font-family: 'Nunito', Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  color: var(--muted);
+  margin-left: 6px;
+  text-transform: uppercase;
+}
+.move-column h4 {
+  margin: 14px 0 6px;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.move-column ul { list-style: none; margin: 0; padding: 0; }
+.move-column li {
+  display: grid;
+  grid-template-columns: 92px 104px 1fr;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #ffffff08;
+  font-size: 11px;
+}
+.move-column .combos li { grid-template-columns: 1fr auto; }
+.move-column .combos li em { grid-column: 2; grid-row: 1; }
+
+.move-input {
+  font-weight: 900;
+  color: var(--hay);
+  font-size: 10px;
+  letter-spacing: .5px;
+}
+.move-type {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.move-name { font-weight: 700; color: var(--text); }
+
+.move-column em {
+  margin-left: 6px;
+  color: var(--sun);
+  font-style: normal;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .5px;
+}
+.combo-seq {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 10px;
+  padding-top: 2px;
+}
+.move-column li.empty { color: var(--muted); }
+.move-column li.empty .move-name { font-style: italic; font-weight: 500; }
+
+@media (max-width: 800px) {
+  .move-list { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .controls-strip { flex-direction: column; }
+  .move-column li { grid-template-columns: 78px 1fr; }
+  .move-column li .move-type { display: none; }
+}
+

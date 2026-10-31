@@ -1,53 +1,140 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Clash | Fighting Arcade</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farm Fighter</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/select.css">
+  <link rel="stylesheet" href="css/game.css">
+
+  <!-- Scripts run in this order. -->
+  <script src="js/core/config.js" defer></script>
+  <script src="js/core/registry.js" defer></script>
+  <script src="js/core/state.js" defer></script>
+  <script src="js/ui/dom.js" defer></script>
+
+  <script src="js/engine/sprites.js" defer></script>
+  <script src="js/engine/particles.js" defer></script>
+  <script src="js/engine/fighter.js" defer></script>
+  <script src="js/engine/fighter-builtin.js" defer></script>
+  <script src="js/engine/combat.js" defer></script>
+  <script src="js/engine/arena.js" defer></script>
+  <script src="js/engine/hud.js" defer></script>
+  <script src="js/engine/ai.js" defer></script>
+  <script src="js/engine/match.js" defer></script>
+
+  <script src="js/ui/select-screen.js" defer></script>
+  <script src="js/ui/map-select.js" defer></script>
+  <script src="js/ui/move-list.js" defer></script>
+  <script src="js/ui/screens.js" defer></script>
+  <script src="js/ui/input.js" defer></script>
+  <script src="js/ui/fullscreen.js" defer></script>
+
+  <!-- Fighters -->
+  <script src="data/fighters/chicken.js" defer></script>
+
+  <!-- Maps -->
+  <script src="data/maps/red-barn.js" defer></script>
+  <script src="data/maps/hayloft.js" defer></script>
+  <script src="data/maps/moonlit-pasture.js" defer></script>
+
+  <script src="js/main.js" defer></script>
 </head>
 <body>
-    <main class="game-container">
-        <header class="game-header">
-            <div class="brand">
-                <span class="brand-icon">✦</span>
-                <div>
-                    <h1>NEON <span>CLASH</span></h1>
-                    <p>ARCADE FIGHTING CHAMPIONSHIP</p>
-                </div>
+  <main class="app-shell">
+
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48">
+            <path d="M6 22 L14 10 L24 5 L34 10 L42 22 L42 44 L6 44 Z" fill="#c0392b" stroke="#f7ecd8" stroke-width="2.5" stroke-linejoin="round"/>
+            <rect x="17" y="27" width="14" height="17" fill="#7a1f16" stroke="#f7ecd8" stroke-width="2"/>
+            <path d="M17 27 L31 44 M31 27 L17 44" stroke="#f7ecd8" stroke-width="2"/>
+            <rect x="20" y="13" width="8" height="7" fill="#7a1f16" stroke="#f7ecd8" stroke-width="2"/>
+          </svg>
+        </span>
+        <span><strong>FARM FIGHTER</strong><small>ORIGINAL ARCADE</small></span>
+      </a>
+      <div class="topbar-right">
+        <span class="live-dot"></span><span>ARCADE MODE</span>
+        <button id="fullscreenButton" class="icon-button" type="button" title="Fullscreen" aria-label="Toggle fullscreen">⛶</button>
+      </div>
+    </header>
+
+    <!-- ── Single arena box: canvas lives here always ── -->
+    <div class="arena-wrap">
+
+      <div class="arena" id="arenaBox">
+
+        <!-- The game canvas — always present, game loop always runs -->
+        <canvas id="gameCanvas" width="1600" height="900" aria-label="Farm fighting game"></canvas>
+
+        <!-- SELECT OVERLAY — shown on top of the canvas before the fight -->
+        <div id="selectScreen" class="select-overlay">
+          <div class="select-inner">
+            <div class="eyebrow">FARM FIGHTER</div>
+            <h1>CHICKEN FIGHT<span>!</span></h1>
+            <p class="muted">Two chickens, one barn, one winner.</p>
+
+            <div class="p2-mode" role="group" aria-label="Who plays Player 2">
+              <span class="p2-mode-label">PLAYER 2 IS</span>
+              <button class="mode-button" type="button" data-mode="human">HUMAN</button>
+              <button class="mode-button" type="button" data-mode="easy">CPU · EASY</button>
+              <button class="mode-button" type="button" data-mode="normal">CPU · NORMAL</button>
+              <button class="mode-button" type="button" data-mode="hard">CPU · HARD</button>
             </div>
-            <div class="status">● LOCAL MULTIPLAYER</div>
-        </header>
 
-        <section class="arena">
-            <canvas id="gameCanvas" width="960" height="540">
-                Your browser does not support HTML Canvas.
-            </canvas>
-        </section>
-
-        <section class="controls">
-            <div class="player-controls blue">
-                <h2>PLAYER 1 <span>CYBER</span></h2>
-                <p><kbd>A</kbd> <kbd>D</kbd> Move</p>
-                <p><kbd>W</kbd> Jump · <kbd>F</kbd> Punch · <kbd>G</kbd> Kick</p>
-            </div>
-
-            <div class="player-controls pink">
-                <h2>PLAYER 2 <span>PHANTOM</span></h2>
-                <p><kbd>←</kbd> <kbd>→</kbd> Move</p>
-                <p><kbd>↑</kbd> Jump · <kbd>K</kbd> Punch · <kbd>L</kbd> Kick</p>
-            </div>
-        </section>
-
-        <div class="game-actions">
-            <button id="startButton">START FIGHT</button>
-            <p>Press ENTER to start or restart the match.</p>
+            <button id="startFightButton" class="primary-button" type="button">
+              START THE FIGHT <span>→</span>
+            </button>
+          </div>
         </div>
 
-        <footer>NEON CLASH © 2026 · FIGHT WITH HONOR</footer>
-    </main>
+        <!-- MATCH-END OVERLAY — shown when a match finishes -->
+        <div id="matchOverlay" class="match-overlay hidden">
+          <div class="overlay-kicker">MATCH COMPLETE</div>
+          <h2 id="winnerText">Player WINS!</h2>
+          <p>Ready for another round?</p>
+          <div class="overlay-actions">
+            <button id="rematchButton" class="primary-button" type="button">REMATCH ↻</button>
+            <button id="changeFightersButton" class="secondary-button" type="button">← MAIN MENU</button>
+          </div>
+        </div>
 
-    <script src="game.js"></script>
+        <!-- PAUSE OVERLAY -->
+        <div id="pauseOverlay" class="match-overlay hidden">
+          <div class="overlay-kicker">PAUSED</div>
+          <h2>GAME PAUSED</h2>
+          <p>Press P or ESC to keep fighting</p>
+          <div class="overlay-actions">
+            <button id="resumeButton" class="primary-button" type="button">RESUME ▶</button>
+            <button id="mainMenuButton" class="secondary-button" type="button">← MAIN MENU</button>
+          </div>
+        </div>
+
+        <!-- Fullscreen button always visible in the corner -->
+        <button id="arenaFullscreen" class="arena-fullscreen" type="button" title="Fullscreen" aria-label="Toggle fullscreen">⛶</button>
+
+      </div><!-- /.arena -->
+
+      <!-- Controls strip — just below the box, outside fullscreen -->
+      <div class="controls-strip" id="gameScreen">
+        <div><span class="key">A</span><span class="key">D</span><span class="key">W</span><span class="key">S</span><span class="key">F</span><span class="key">G</span><span class="key">H</span><small>P1 · MOVE / JUMP / BLOCK / PUNCH / KICK / SPECIAL</small></div>
+        <div><span class="key">P</span><small>PAUSE</small></div>
+        <div id="p2Controls"><span class="key">←</span><span class="key">→</span><span class="key">↑</span><span class="key">↓</span><span class="key">K</span><span class="key">L</span><span class="key">J</span><small>P2 · MOVE / JUMP / BLOCK / PUNCH / KICK / SPECIAL</small></div>
+      </div>
+
+    </div><!-- /.arena-wrap -->
+
+    <!-- MOVE LIST — inside the arena box, shown after fight starts -->
+    <div id="moveList" class="move-list hidden"></div>
+
+    <footer>
+      <span>FARM FIGHTER <span class="footer-dot">●</span> ORIGINAL ARCADE CONCEPT</span>
+      <span>BUILT FOR TWO PLAYERS · ONE KEYBOARD</span>
+    </footer>
+
+  </main>
 </body>
 </html>

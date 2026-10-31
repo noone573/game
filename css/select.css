@@ -1,0 +1,334 @@
+/* ── Select screen ── */
+
+.select-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  padding: 36px 0 32px;
+}
+
+/* ── hero heading ── */
+.heading-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.round-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: var(--panel-2);
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.round-chip span {
+  font-family: 'Lilita One', Impact, sans-serif;
+  font-size: 18px;
+  color: var(--hay);
+  letter-spacing: 0;
+}
+
+/* ── player pick buttons ── */
+.player-picks {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.player-pick {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  text-align: left;
+  transition: border-color .15s, background .15s;
+  cursor: pointer;
+}
+.player-pick:hover {
+  background: var(--panel-2);
+  border-color: var(--muted);
+}
+.player-pick.active.p1-pick {
+  border-color: var(--hay);
+  background: #f0b83c0e;
+  box-shadow: 0 0 0 1px var(--hay) inset;
+}
+.player-pick.active.p2-pick {
+  border-color: var(--barn);
+  background: #c0392b0e;
+  box-shadow: 0 0 0 1px var(--barn) inset;
+}
+
+.pick-number {
+  font-family: 'Lilita One', Impact, sans-serif;
+  font-size: 28px;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+.p1-pick .pick-number { color: var(--hay); }
+.p2-pick .pick-number { color: var(--barn); }
+
+.pick-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pick-copy small {
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.pick-copy strong {
+  font-family: 'Lilita One', Impact, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--text);
+}
+
+.pick-status {
+  margin-left: auto;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+.active .pick-status {
+  color: var(--hay);
+  border-color: var(--hay);
+}
+
+/* ── roster grid ── */
+.roster {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+/* Fighter cards are built by select-screen JS — style the class it adds */
+.fighter-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .15s, background .15s, transform .12s;
+  overflow: hidden;
+}
+.fighter-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--fighter-color, var(--hay));
+  border-radius: 12px 12px 0 0;
+}
+.fighter-card:hover {
+  background: var(--panel-2);
+  border-color: var(--muted);
+  transform: translateY(-2px);
+}
+.fighter-card.selected-p1 {
+  border-color: var(--hay);
+  background: #f0b83c0c;
+}
+.fighter-card.selected-p2 {
+  border-color: var(--barn);
+  background: #c0392b0c;
+}
+
+.fighter-card-name {
+  font-family: 'Lilita One', Impact, sans-serif;
+  font-size: 17px;
+  letter-spacing: 1px;
+  color: var(--text);
+}
+.fighter-card-desc {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* stat bars */
+.fighter-stats { display: flex; flex-direction: column; gap: 5px; }
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.stat-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.stat-fill {
+  height: 100%;
+  background: var(--fighter-color, var(--hay));
+  border-radius: 999px;
+}
+
+.fighter-card-moves {
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+  border-top: 1px solid var(--line);
+  padding-top: 8px;
+}
+
+/* ── section heading between roster and maps ── */
+.section-heading {
+  width: 100%;
+}
+.section-heading .hint { margin-top: 4px; }
+
+/* ── map cards ── */
+.map-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.map-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .15s, transform .12s;
+  text-align: left;
+}
+.map-card:hover {
+  border-color: var(--muted);
+  transform: translateY(-2px);
+}
+.map-card.selected {
+  border-color: var(--hay);
+  box-shadow: 0 0 0 1px var(--hay) inset, 0 0 20px #f0b83c22;
+}
+.map-card canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px 10px 0 0;
+}
+.map-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 13px;
+  font-family: 'Lilita One', Impact, sans-serif;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: var(--text);
+}
+.map-name small {
+  font-family: 'Nunito', Arial, sans-serif;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--hay);
+  text-transform: uppercase;
+  border: 1px solid var(--hay);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+/* ── p2 mode ── */
+.p2-mode {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+.p2-mode-label {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  color: var(--muted);
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+}
+.mode-button {
+  padding: 0 22px;
+  height: 40px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.mode-button:hover {
+  color: var(--text);
+  border-color: var(--muted);
+  background: var(--panel-2);
+}
+.mode-button.active {
+  color: var(--barn);
+  border-color: var(--barn);
+  background: #c0392b12;
+}
+
+/* ── footer row ── */
+.select-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+.select-footer .hint { text-align: center; }
+
+@media (max-width: 680px) {
+  .player-picks { flex-direction: column; }
+  .roster { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .map-list { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+}

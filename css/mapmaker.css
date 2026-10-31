@@ -1,0 +1,33 @@
+/* Map maker. */
+.mm-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; align-items: start; }
+.mm-canvas-wrap { border: 1px solid #6b4a2e; border-radius: 13px; overflow: hidden; background: #1c120b; }
+#mapCanvas { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; cursor: crosshair; touch-action: none; }
+.mm-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 12px; }
+.mm-toolbar-buttons { display: flex; gap: 8px; flex-shrink: 0; }
+.mm-panel { display: flex; flex-direction: column; gap: 8px; padding: 14px; background: #2e1d11; border: 1px solid var(--line); border-radius: 12px; max-height: calc(100vh - 40px); overflow-y: auto; position: sticky; top: 20px; }
+.mm-group { margin: 12px 0 4px; color: var(--hay); font-size: 9px; font-weight: 900; letter-spacing: 2px; }
+.mm-field { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; font-weight: 600; padding: 3px 0; }
+.mm-field.mm-range { grid-template-columns: 1fr 110px 34px; }
+.mm-field output { color: var(--text); font-size: 10px; text-align: right; font-variant-numeric: tabular-nums; }
+.mm-field.mm-select { grid-template-columns: 1fr 150px; }
+.mm-field.mm-select select { min-height: 32px; font-size: 12px; }
+.mm-field.mm-wide { grid-template-columns: 1fr; gap: 5px; font-size: 9px; font-weight: 800; letter-spacing: 1.2px; }
+.mm-field input[type="color"] { width: 42px; height: 26px; padding: 0; border: 1px solid var(--line); border-radius: 6px; background: none; cursor: pointer; }
+.mm-field input[type="range"] { width: 100%; accent-color: var(--hay); }
+.mm-field input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--hay); }
+.mm-field input[type="text"], .mm-field select { width: 100%; min-height: 36px; padding: 0 10px; color: var(--text); background: #24170c; border: 1px solid var(--line); border-radius: 7px; font: 700 13px Nunito, Arial, sans-serif; }
+.mm-picture { display: flex; gap: 8px; }
+.mm-upload { display: inline-flex; align-items: center; position: relative; cursor: pointer; }
+.mm-upload input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.mm-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+.mm-status { min-height: 16px; color: var(--hay); }
+.mm-status.error { color: #ff8b97; }
+.mm-code { width: 100%; min-height: 180px; padding: 10px; color: #f7ecd8; background: #24170c; border: 1px solid var(--line); border-radius: 8px; font: 11px/1.45 Consolas, monospace; resize: vertical; }
+
+@media (max-width: 800px) {
+  .mm-layout { grid-template-columns: 1fr; }
+  .mm-panel { position: static; max-height: none; }
+}
+@media (max-width: 520px) {
+  .mm-toolbar { flex-direction: column; align-items: stretch; }
+}

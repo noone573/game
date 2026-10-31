@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Make Map Backgrounds</title>
+  <!-- Draws every map's built-in look (scenery, floor and voids, no platforms)
+       as a picture you can save into assets/maps/ and paint over.
+       Open it through the same server as the game, e.g.
+       http://localhost:5173/tools/make-backgrounds.html -->
+  <script src="../js/core/config.js"></script>
+  <script src="../js/core/registry.js"></script>
+  <script src="../js/engine/arena.js"></script>
+  <script src="../data/maps/red-barn.js"></script>
+  <script src="../data/maps/hayloft.js"></script>
+  <script src="../data/maps/moonlit-pasture.js"></script>
+  <style>
+    body { margin: 20px; background: #1c120b; color: #f7ecd8; font-family: Arial, sans-serif; }
+    figure { margin: 0 0 28px; }
+    canvas { display: block; width: 640px; max-width: 100%; height: auto; border: 1px solid #5b3c25; }
+    a { color: #f0b83c; }
+  </style>
+</head>
+<body>
+  <h1>Map backgrounds</h1>
+  <p>Each picture is the map's built-in look. Right-click → "Save image as", or use the link,
+     and save it as <code>assets/maps/&lt;map id&gt;.png</code>.</p>
+  <div id="list"></div>
+  <script>
+    "use strict";
+
+    // The map's own look, with no picture, a floor and no platforms.
+    function renderBackground(map) {
+      const canvas = document.createElement("canvas");
+
+      canvas.width = WIDTH;
+      canvas.height = HEIGHT;
+      drawBuiltInBackground(canvas.getContext("2d"), { ...map, background: null, floorGrid: true });
+
+      return canvas;
+    }
+
+    for (const map of MAPS) {
+      const canvas = renderBackground(map);
+      const figure = document.createElement("figure");
+      const link = document.createElement("a");
+
+      canvas.dataset.mapId = map.id;
+      link.href = canvas.toDataURL("image/png");
+      link.download = `${map.id}.png`;
+      link.textContent = `Download ${map.id}.png (${WIDTH} × ${HEIGHT})`;
+
+      figure.append(canvas, link);
+      document.getElementById("list").appendChild(figure);
+    }
+  </script>
+</body>
+</html>
